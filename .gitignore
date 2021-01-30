@@ -1,0 +1,16 @@
+node_modules
+.DS_Store
+.vscode
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# dotenv environment variables file
+.env
+.env.test
+
+yarn.lock
+package-lock.json
+
+
+package-lock.json
