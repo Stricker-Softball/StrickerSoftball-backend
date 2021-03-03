@@ -11,7 +11,7 @@ module.exports = {
 //Returns all events for all users
 
 function find() {
-    return db('events');
+    return db('events').select('title', 'body', 'id');
 }
 
 //Returns a single event by event id
