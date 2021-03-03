@@ -1,6 +1,14 @@
 const express = require('express');
 const cors = require('cors');
 const server = express();
+ 
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_API_KEY,
+    api_secret: process.env.CLOUD_API_SECRET
+})
 
 server.use(require("body-parser").text());
 server.use(cors());
@@ -15,6 +23,3 @@ server.use("/api/events", eventsRouter);
 server.get('/', (req, res) => {
     res.status(200).json({ msg: 'Server Up!' });
 });
-
-
-module.exports = server;

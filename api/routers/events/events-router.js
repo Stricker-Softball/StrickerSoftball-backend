@@ -47,6 +47,15 @@ async function addEvent(req, res) {
     }
 }
 
+//Posts image to events table 
+async function addEventImage() {
+    try {
+
+    } catch (err) {
+
+    }
+}
+
 //Does a put request to a single event using event id
 
 async function updateEvent(req, res) {
