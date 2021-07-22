@@ -11,26 +11,30 @@ const localPG = db => ({
 const pgTest = localPG(process.env.DB_TEST);
 const pgDev = localPG(process.env.DB_DEV);
 
-const dbSettings = (connection) => ({
-  client: 'pg',
-  connection,
-  pool: {
-    min: 2,
-    max: 10
-  },
-  useNullAsDefault: true,
-  migrations: {
-    directory: './data/migrations'
-  },
-  seeds: {
-    directory: `./data/seeds`
-  }
-});
+const dbSettings = (connection) => {
+  connection.ssl = { rejectUnauthorized: false };
+
+  return {
+    client: 'pg',
+    connection,
+    pool: {
+      min: 2,
+      max: 10
+    },
+    useNullAsDefault: true,
+    migrations: {
+      directory: './data/migrations'
+    },
+    seeds: {
+      directory: `./data/seeds`
+    }
+  };
+};
 
 module.exports = {
   testing: dbSettings(pgTest),
   development: dbSettings(pgDev),
-  production: dbSettings(`${process.env.DATABASE_URL}?sslmode=require`),
+  production: dbSettings(`${process.env.DATABASE_URL}`),
   onUpdateTrigger: table => `
   CREATE TRIGGER ${table}_updated_at
   BEFORE UPDATE ON ${table}
