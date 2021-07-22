@@ -1,20 +1,13 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
 const server = express();
-const helmet = require("helmet");
- 
-// const cloudinary = require('cloudinary').v2;
 
-// cloudinary.config({
-//     cloud_name: process.env.CLOUD_NAME,
-//     api_key: process.env.CLOUD_API_KEY,
-//     api_secret: process.env.CLOUD_API_SECRET
-// })
-
-server.use(require("body-parser").text());
+server.use(helmet());
 server.use(cors());
 server.use(express.json());
-server.use(helmet());
+server.use(require("body-parser").text());
 
 const userRouter = require('./routers/users/users-router.js');
 const eventsRouter = require('./routers/events/events-router.js');

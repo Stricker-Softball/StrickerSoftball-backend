@@ -1,4 +1,3 @@
-// Update with your config settings.
 require('dotenv').config();
 
 const localPG = db => ({
@@ -11,32 +10,27 @@ const localPG = db => ({
 const pgTest = localPG(process.env.DB_TEST);
 const pgDev = localPG(process.env.DB_DEV);
 
-const dbSettings = (connection) => {
-  return {
-    client: 'pg',
-    connection,
-    pool: {
-      min: 2,
-      max: 10
-    },
-    useNullAsDefault: true,
-    migrations: {
-      directory: './data/migrations'
-    },
-    seeds: {
-      directory: `./data/seeds`
-    }
-  };
-};
+const dbSettings = (connection) => ({
+  client: 'pg',
+  connection,
+  pool: {
+    min: 2,
+    max: 10
+  },
+  useNullAsDefault: true,
+  migrations: {
+    directory: './data/migrations'
+  },
+  seeds: {
+    directory: `./data/seeds`
+  }
+});
 
 module.exports = {
   testing: dbSettings(pgTest),
   development: dbSettings(pgDev),
-  production: dbSettings(`${process.env.DATABASE_URL}?sslmode=false`),
-  onUpdateTrigger: table => `
-  CREATE TRIGGER ${table}_updated_at
-  BEFORE UPDATE ON ${table}
-  FOR EACH ROW
-  EXECUTE PROCEDURE on_update_timestamp();
-`
+  production: dbSettings(process.env.DATABASE_URL),
+  pool: {
+    "propagateCreateError": false
+  },
 };
