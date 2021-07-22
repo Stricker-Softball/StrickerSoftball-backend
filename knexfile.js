@@ -30,7 +30,7 @@ const dbSettings = (connection) => ({
 module.exports = {
   testing: dbSettings(pgTest),
   development: dbSettings(pgDev),
-  production: dbSettings(process.env.DATABASE_URL),
+  production: dbSettings(`${process.env.DATABASE_URL}?sslmode=require`),
   onUpdateTrigger: table => `
   CREATE TRIGGER ${table}_updated_at
   BEFORE UPDATE ON ${table}
