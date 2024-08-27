@@ -51,7 +51,7 @@ async function sendEmail(subject, message) {
 }
 
 // define your own email api which points to your server.
-app.post('/api/sendemail/', function (req, res) {
+server.post('/api/sendemail/', function (req, res) {
   const {name, email, message} = req.body;
   //implement your spam protection or checks.
   sendEmail(name + " - " + email, message);
